@@ -1,0 +1,21 @@
+[
+  // {
+  //   type: "IntegratedMesh",
+  //   url: "https://geo.xdata.group/geoserver/rest/services/Hosted/XZ_CH_QXSY_WSL1/SceneServer",
+  // },
+  {
+    type: "arcgis-tiled",
+    url: "https://geo.xdata.group/geoserver/rest/services/Hosted/XZ_CH_HP_2019_0dot5M/MapServer",
+    tileInfo: tileInfo,
+  },
+  {
+    type: "arcgis-dynamic",
+    url: "http://52.82.98.186:6080/arcgis/rest/services/XZQH/XZQH_polygon/MapServer",
+    layerID: 1,
+  },
+  {
+    type: "3DObject",
+    url: "https://geo.xdata.group/geoserver/rest/services/Hosted/KG_YDGH_MP/SceneServer",
+    layerID: 0,
+  },
+]
