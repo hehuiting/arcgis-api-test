@@ -4,6 +4,10 @@ import router from "./router";
 import store from "./store";
 
 import "@arcgis/core/assets/esri/themes/light/main.css";
+import ViewUI from "view-design";
+import "view-design/dist/styles/iview.css";
+
+Vue.use(ViewUI);
 
 Vue.config.productionTip = false;
 

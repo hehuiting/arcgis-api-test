@@ -143,6 +143,16 @@ const tileInfo = {
   ],
 };
 
+export const addLayers = (layers) => {
+  const lyrs = [];
+  Array.isArray(layers) &&
+    layers.forEach((layerInfo) => {
+      const lyr = addLayer(layerInfo);
+      lyrs.push(lyr);
+    });
+  return lyrs;
+};
+
 export const addLayer = (layerInfo) => {
   switch (layerInfo.type) {
     case "arcgis-dynamic":
@@ -208,13 +218,10 @@ const createTileLayer = (layerInfo) => {
   });
   return layerIns;
 };
-const createWmtsLayer = () => {
+const createWmtsLayer = (layerInfo) => {
   const tileInfoParam = new TileInfo(tileInfo);
-  const url =
-    "https://{subDomain}.tianditu.gov.cn/vec_c/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&TILECOL={col}&TILEROW={row}&TILEMATRIX={level}&tk=5d4236a2a06043cd0b0880bbf270c958";
-  // const spatialReference = new SpatialReference({ wkid: 4490 });
   const layerIns = new WebTileLayer({
-    urlTemplate: url,
+    urlTemplate: layerInfo.url,
     subDomains: ["t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"],
     tileInfo: tileInfoParam,
     spatialReference: tileInfo.spatialReference,
@@ -243,7 +250,7 @@ const createSceneLayer = (layerInfo) => {
     url,
     outFields: ["*"],
     layerId: layerID,
-    popupEnabled: true,
+    popupEnabled: false,
   });
   return layerIns;
 };

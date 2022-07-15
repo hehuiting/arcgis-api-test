@@ -2,22 +2,27 @@
  * @Author: heht
  * @Date: 2021-08-11 22:36:31
  * @LastEditors: heht
- * @LastEditTime: 2022-02-07 17:58:12
+ * @LastEditTime: 2022-07-15 17:30:18
  * @Description: 
 -->
 <template>
-  <div class="view-container" ref="viewDiv"></div>
+  <div class="main">
+    <div class="view-container" ref="viewDiv"></div>
+    <Button class="query-btn" type="primary" @click="handleQuery">查询</Button>
+  </div>
 </template>
 
 <script>
 import Map from "@arcgis/core/Map";
 import SceneView from "@arcgis/core/views/SceneView";
+import MapView from "@arcgis/core/views/MapView";
+
 import Extent from "@arcgis/core/geometry/Extent";
 import Camera from "@arcgis/core/Camera";
 
 import axios from "axios";
 import Hjson from "hjson";
-import { addLayer } from "../utils/layer";
+import { addLayers } from "../utils/layer";
 
 export default {
   name: "SceneView",
@@ -31,40 +36,53 @@ export default {
   },
   methods: {
     async initScene() {
-      const baseLayer = addLayer({ type: "wmts" });
+      const { baseLayers, topicLayers } = await this.getLayersConfig();
+      const baseLayerArr = addLayers(baseLayers);
       let map = new Map({
-        layers: [baseLayer],
+        layers: baseLayerArr,
       });
-
       this.map = map;
-      const view = new SceneView({
+      map.addMany(addLayers(topicLayers));
+      // new MapView({
+      //   container: this.$refs.viewDiv,
+      //   map: map,
+      //   spatialReference: { wkid: 4490 },
+      //   extent: new Extent({
+      //     xmin: 119.37764688740451,
+      //     ymin: 28.249057643895988,
+      //     xmax: 120.63730227954349,
+      //     ymax: 29.0587023378092,
+      //     spatialReference: {
+      //       wkid: 4490,
+      //     },
+      //   }),
+      // });
+      const sceneView = new SceneView({
         container: this.$refs.viewDiv,
         map: map,
-        // camera: {
-        //   position: {
-        //     x: -118.808, //Longitude
-        //     y: 33.961, //Latitude
-        //     z: 2000, //Meters
-        //   },
-        //   tilt: 75,
-        // },
-        spatialReference: { wkid: 4490 },
+        spatialReference: { wkid: 4326 },
         extent: new Extent({
-          xmin: 122.16629824430832,
-          ymin: 37.41419531457847,
-          xmax: 122.18345512064325,
-          ymax: 37.423703688868024,
+          xmin: 118.82927337887818,
+          ymin: 28.974426993458984,
+          xmax: 118.83570571305256,
+          ymax: 28.979967073638424,
           spatialReference: {
-            wkid: 4490,
+            wkid: 4326,
           },
         }),
       });
-      this.$emit("scene-ready", { map: map, view: view });
-      this.sceneView = view;
 
-      const layerArr = await this.getLayersConfig();
-      const layers = this.addLayers(layerArr);
-      this.map.addMany(layers);
+      // sceneView.watch("center", (val) => {
+      //   console.log(val.longitude, val.latitude);
+      // });
+    },
+
+    handleQuery() {
+      console.log("加载图层", this.map.layers);
+      this.map.layers.items.forEach((item) => {
+        if (item.type === "scene") {
+        }
+      });
     },
 
     async getLayersConfig() {
@@ -72,16 +90,6 @@ export default {
       const layersConfig = Hjson.parse(res.data);
       console.log("图层配置", layersConfig);
       return layersConfig;
-    },
-
-    addLayers(layers) {
-      const lyrs = [];
-      Array.isArray(layers) &&
-        layers.forEach((layerInfo) => {
-          const lyr = addLayer(layerInfo);
-          lyrs.push(lyr);
-        });
-      return lyrs;
     },
 
     // 根据图层范围获取三维视角
@@ -110,8 +118,17 @@ export default {
 };
 </script>
 <style scoped>
+.main {
+  width: 100%;
+  height: 100%;
+}
 .view-container {
   width: 100%;
   height: 100%;
+}
+.query-btn {
+  position: absolute;
+  top: 1rem;
+  left: 5rem;
 }
 </style>
