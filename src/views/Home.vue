@@ -2,7 +2,7 @@
  * @Author: heht
  * @Date: 2021-08-11 22:36:31
  * @LastEditors: heht
- * @LastEditTime: 2022-07-15 17:30:18
+ * @LastEditTime: 2022-12-01 16:51:19
  * @Description: 
 -->
 <template>
@@ -14,6 +14,7 @@
 
 <script>
 import Map from "@arcgis/core/Map";
+import Basemap from "@arcgis/core/Basemap";
 import SceneView from "@arcgis/core/views/SceneView";
 import MapView from "@arcgis/core/views/MapView";
 
@@ -27,9 +28,7 @@ import { addLayers } from "../utils/layer";
 export default {
   name: "SceneView",
   data() {
-    return {
-      map: null,
-    };
+    return {};
   },
   mounted() {
     this.initScene();
@@ -38,11 +37,16 @@ export default {
     async initScene() {
       const { baseLayers, topicLayers } = await this.getLayersConfig();
       const baseLayerArr = addLayers(baseLayers);
+      const layers = addLayers(topicLayers);
+      const baseMap = new Basemap({
+        baseLayers: baseLayerArr,
+      });
       let map = new Map({
-        layers: baseLayerArr,
+        basemap: baseMap,
+        layers: layers,
       });
       this.map = map;
-      map.addMany(addLayers(topicLayers));
+
       // new MapView({
       //   container: this.$refs.viewDiv,
       //   map: map,
@@ -51,30 +55,29 @@ export default {
       //     xmin: 119.37764688740451,
       //     ymin: 28.249057643895988,
       //     xmax: 120.63730227954349,
-      //     ymax: 29.0587023378092,
+      //     ymax: 30.0587023378092,
       //     spatialReference: {
       //       wkid: 4490,
       //     },
       //   }),
       // });
+
       const sceneView = new SceneView({
         container: this.$refs.viewDiv,
         map: map,
-        spatialReference: { wkid: 4326 },
+        spatialReference: { wkid: 4490 },
+        zoom: 7,
+        center: [119.5, 28.7],
         extent: new Extent({
-          xmin: 118.82927337887818,
-          ymin: 28.974426993458984,
-          xmax: 118.83570571305256,
-          ymax: 28.979967073638424,
+          xmin: 73.499012615,
+          ymin: 3.83788899000001,
+          xmax: 135.087376349,
+          ymax: 53.561656769,
           spatialReference: {
-            wkid: 4326,
+            wkid: 4490,
           },
         }),
       });
-
-      // sceneView.watch("center", (val) => {
-      //   console.log(val.longitude, val.latitude);
-      // });
     },
 
     handleQuery() {
@@ -85,6 +88,7 @@ export default {
       });
     },
 
+    // 获取图层配置信息
     async getLayersConfig() {
       const res = await axios.get(`static/layerConfig.hjson`);
       const layersConfig = Hjson.parse(res.data);

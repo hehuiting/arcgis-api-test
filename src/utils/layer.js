@@ -6,6 +6,7 @@ import TileLayer from "@arcgis/core/layers/TileLayer";
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer";
 import SceneLayer from "@arcgis/core/layers/SceneLayer";
 import Extent from "@arcgis/core/geometry/Extent";
+import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer";
 
 const tileInfo = {
   dpi: 96,
@@ -253,4 +254,27 @@ const createSceneLayer = (layerInfo) => {
     popupEnabled: false,
   });
   return layerIns;
+};
+
+const addGeoJSONLayer = (geojson) => {
+  const blob = new Blob([JSON.stringify(geojson)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const renderer = {
+    type: "simple",
+    symbol: {
+      type: "simple-marker",
+      color: "orange",
+      outline: {
+        color: "white",
+      },
+    },
+  };
+  const layerIns = new GeoJSONLayer({
+    url,
+    renderer,
+  });
+
+  this.map.add(layerIns);
 };

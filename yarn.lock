@@ -3823,6 +3823,11 @@ esrecurse@^4.1.0, esrecurse@^4.3.0:
   dependencies:
     estraverse "^5.2.0"
 
+esrilab@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/esrilab/-/esrilab-0.0.1.tgz#a35f36d79bb5c1b0481c40952b5f0869140821cf"
+  integrity sha512-MxpJ9+UemrpuHmFoLkl1OaVHyijsFIe0pgnXUcXyqCZw6oGESqmzNHp69LHD8speB+bnjJP2yopZE3gScvmFSg==
+
 estraverse@^4.1.1:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/estraverse/-/estraverse-4.3.0.tgz#398ad3f3c5a24948be7725e83d11a7de28cdbd1d"

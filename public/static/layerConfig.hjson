@@ -1,25 +1,35 @@
 {
   "baseLayers": [
-    // {
-    //   "type": "wmts",
-    //   "url": "http://{subDomain}.tianditu.gov.cn/vec_c/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=vec&STYLE=default&FORMAT=tiles&TILEMATRIXSET=c&tk=5d4236a2a06043cd0b0880bbf270c958&TILECOL={col}&TILEROW={row}&TILEMATRIX={level}"
-    // },
+    {
+      "type": "wmts",
+      "url": "http://{subDomain}.tianditu.gov.cn/vec_c/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=vec&STYLE=default&FORMAT=tiles&TILEMATRIXSET=c&tk=5d4236a2a06043cd0b0880bbf270c958&TILECOL={col}&TILEROW={row}&TILEMATRIX={level}"
+    },
+     {
+    type: "arcgis-dynamic",
+    url: "http://58.246.138.178:8943/arcgis/rest/services/XZQH/XZQH_polygon/MapServer",
+    layerID: 1,
+  },
+    //  {
+    //   "type": "arcgis-dynamic",
+    //   "url": "http://58.246.138.178:8943/arcgis/rest/services/YZT/YZTYLSJ/MapServer",
+    //   "layerID": 31
+    // } 
     {
       type: "arcgis-tiled",
-        url: "http://58.246.138.178:8943/arcgis/rest/services/YZT/YX2016/MapServer",
+        url: "http://58.246.138.178:8943/arcgis/rest/services/YZT/YX2014/MapServer",
     }
   ],
   "topicLayers": [
-  // {
-  //   type: "IntegratedMesh",
-  //   url: "https://geo.xdata.group/geoserver/rest/services/Hosted/XZ_CH_QXSY_WSL1/SceneServer",
-  //   wkid:"4490"
-  // },
-    {
-      "type": "arcgis-dynamic",
-      "url": "http://58.246.138.178:8943/arcgis/rest/services/YZT/YZTYLSJ/MapServer",
-      "layerID": 31
-    } 
+  {
+    type: "IntegratedMesh",
+    url: "https://geo.xdata.group:9019/geoserver/rest/services/Hosted/XZ_WH_QXSY_WSL1/SceneServer",
+    wkid:"4490"
+  },
+    // {
+    //   "type": "arcgis-dynamic",
+    //   "url": "http://58.246.138.178:8943/arcgis/rest/services/YZT/YZTYLSJ/MapServer",
+    //   "layerID": 31
+    // } 
   // {
   //   type: "arcgis-tiled",
   //   url: "https://geo.xdata.group/geoserver/rest/services/Hosted/XZ_CH_HP_2019_0dot5M/MapServer",
@@ -27,14 +37,14 @@
   // },
   // {
   //   type: "arcgis-dynamic",
-  //   url: "http://52.82.98.186:6080/arcgis/rest/services/XZQH/XZQH_polygon/MapServer",
+  //   url: "http://58.246.138.178:8943/arcgis/rest/services/XZQH/XZQH_polygon/MapServer",
   //   layerID: 1,
   // },
-  // {
-  //   type: "3DObject",
-  //   url: "https://geo.xdata.group/geoserver/rest/services/Hosted/KG_YDGH_MP/SceneServer",
-  //   layerID: 0,
-  // },
+  {
+    type: "3DObject",
+    url: "https://geo.xdata.group:9019/geoserver/rest/services/Hosted/W_GK_BM_WH/SceneServer",
+    layerID: 0,
+  },
   // {
   //   type: "IntegratedMesh",
   //   url: "https://qzssjd.zgj.qz.gov.cn:5988/qzgt23/61d6c589c1144932a41ec0d0dfa08c76/server/rest/services/Hosted/qz0413/SceneServer",
